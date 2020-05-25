@@ -12,12 +12,12 @@ namespace medium8_1_3
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new NullReferenceException();
+                throw new ArgumentNullException(nameof(name));
             }
 
             if (count < 1)
             {
-                throw new NullReferenceException();
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
 
             Name = name;

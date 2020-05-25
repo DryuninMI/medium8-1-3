@@ -13,7 +13,7 @@ namespace medium8_1_3
         {
             if(maxWeidth < 1)
             {
-                throw new InvalidOperationException();
+                throw new ArgumentOutOfRangeException(nameof(maxWeidth));
             }
 
             MaxWeidth = maxWeidth;
