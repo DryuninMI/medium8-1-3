@@ -1,32 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace medium8_1_3
-{    class Bag
+{
+    public class Bag
     {
-        public List<Item> Items;
-        public int MaxWeidth;
+        private readonly List<Item> _items;
+        public uint MaxWeidth { get; private set; }
 
-        public void AddItem(string name, int count)
+        public Bag(uint maxWeidth = 1)
         {
-            int currentWeidth = Items.Sum(item => item.Count);
-            Item targetItem = Items.FirstOrDefault(item => item.Name == name);
+            if(maxWeidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWeidth));
+            }
 
-            if (targetItem == null)
-                throw new InvalidOperationException();
-
-            if (currentWeidth + count > MaxWeidth)
-                throw new InvalidOperationException();
-
-            targetItem.Count += count;
+            MaxWeidth = maxWeidth;
+            _items = new List<Item>();
         }
-    }
 
-    class Item
-    {
-        public int Count;
-        public string Name;
+        public bool AddItem(Item item)
+        {
+            var currentWeidth = _items.Sum(bagItem => bagItem.Count);           
+
+            if ((currentWeidth + item.Count) > MaxWeidth)
+            {
+                return false;
+            }
+            else
+            {
+                Item targetItem = _items.FirstOrDefault(bagItem => bagItem.Name == item.Name);
+                if(targetItem == null)
+                {
+                    _items.Add(item);
+                }
+                else
+                {
+                    targetItem.Count += item.Count;
+                }
+            }
+
+            return true;
+        }
+
+        public IEnumerable<Item> ShowBag() => _items;
     }
 }
