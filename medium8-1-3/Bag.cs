@@ -7,9 +7,9 @@ namespace medium8_1_3
     public class Bag
     {
         private readonly List<Item> _items;
-        public int MaxWeidth { get; private set; }
+        public uint MaxWeidth { get; private set; }
 
-        public Bag(int maxWeidth = 1)
+        public Bag(uint maxWeidth = 1)
         {
             if(maxWeidth < 1)
             {
@@ -22,7 +22,7 @@ namespace medium8_1_3
 
         public bool AddItem(Item item)
         {
-            int currentWeidth = _items.Sum(bagItem => bagItem.Count);           
+            var currentWeidth = _items.Sum(bagItem => bagItem.Count);           
 
             if ((currentWeidth + item.Count) > MaxWeidth)
             {
@@ -37,10 +37,7 @@ namespace medium8_1_3
                 }
                 else
                 {
-                    Item newItem = new Item(targetItem, item.Count);
-
-                    _items.Remove(targetItem);
-                    _items.Add(newItem);
+                    targetItem.Count += item.Count;
                 }
             }
 
